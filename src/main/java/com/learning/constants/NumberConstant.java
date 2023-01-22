@@ -1,5 +1,5 @@
 package com.learning.constants;
 
-public class NumberConstant {
-	public static final int ZERO = 0;
+public interface NumberConstant {
+	 int ZERO = 0;
 }

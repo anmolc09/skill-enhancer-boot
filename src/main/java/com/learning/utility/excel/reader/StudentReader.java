@@ -23,7 +23,7 @@ public class StudentReader {
 
             XSSFWorkbook workbook = new XSSFWorkbook(file);
 
-            XSSFSheet sheet = workbook.getSheetAt(0);
+            XSSFSheet sheet = workbook.getSheetAt(1);
 
             getStudentList(sheet, studentEntityList);
 
