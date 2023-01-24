@@ -12,7 +12,8 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name ="batch")
+@Entity
+@Table(name ="batch")
 public class BatchEntity {
 
 	@Id
