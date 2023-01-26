@@ -13,7 +13,7 @@ import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "Student_batch")
+@Document(collection = "student_batch")
 public class StudentBatchCollection {
 
 	@Id

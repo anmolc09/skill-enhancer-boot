@@ -1,14 +1,14 @@
 package com.learning.rest;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-
 import com.learning.models.CourseModel;
 import com.learning.service.impl.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/course")
@@ -41,7 +41,7 @@ public class CourseController {
 				return courseService.saveAll(courseModelList);
 			}
 		} catch (Exception exception) {
-			System.out.println("Exception Occurs in CourseController || saveAll");
+			System.out.println("Exception Occurs in CourseMongoController || saveAll");
 			System.err.print(exception);
 			return Collections.emptyList();
 		}

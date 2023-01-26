@@ -43,7 +43,7 @@ public class TrainerController {
                 return trainerService.saveAll(trainerModelList);
             }
         } catch (Exception exception) {
-            System.out.println("Exception Occurs in TrainerController || saveAll");
+            System.out.println("Exception Occurs in TrainerMongoController || saveAll");
             System.err.print(exception);
             return Collections.emptyList();
         }

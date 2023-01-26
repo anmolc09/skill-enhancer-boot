@@ -42,7 +42,7 @@ public class StudentBatchController {
 				return studentBatchService.saveAll(studentBatchModelList);
 			}
 		} catch (Exception exception) {
-			System.out.println("Exception Occurs in StudentBatchController || saveAll");
+			System.out.println("Exception Occurs in StudentBatchMongoController || saveAll");
 			System.err.print(exception);
 			return Collections.emptyList();
 		}

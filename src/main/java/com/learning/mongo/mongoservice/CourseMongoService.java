@@ -1,4 +1,4 @@
-package com.learning.mongo.mongoservice.impl;
+package com.learning.mongo.mongoservice;
 
 import com.learning.constants.NumberConstant;
 import com.learning.enums.ErrorMessages;
@@ -68,7 +68,7 @@ public class CourseMongoService implements CommonService<CourseModel, Long> {
     }
 
     @Override
-    public CourseModel saveRecord(CourseModel courseModel) {
+    public CourseModel saveRecord(CourseModel courseModel) { //object
         if (Objects.nonNull(courseModel)) {
             courseRepo.save(modelMapper.map(courseModel, CourseCollection.class));
         }

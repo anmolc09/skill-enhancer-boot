@@ -1,4 +1,4 @@
-package com.learning.mongo.mongoservice.impl;
+package com.learning.mongo.mongoservice;
 
 import com.learning.constants.NumberConstant;
 import com.learning.enums.ErrorMessages;

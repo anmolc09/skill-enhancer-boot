@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Data
 @NoArgsConstructor
@@ -15,7 +15,6 @@ import javax.persistence.Id;
 public class StudentCollection {
 
 	@Id
-	@Field("_id")
 	private Long id;
 	private String name;
 	private Long contactDetails;

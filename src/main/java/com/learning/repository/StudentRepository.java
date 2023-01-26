@@ -8,7 +8,8 @@ import java.util.List;
 
 public interface StudentRepository extends JpaRepository<StudentEntity, Long> {
 
-    @Query("select email from student")
+
+    @Query(value = "select email from student" ,nativeQuery = true)
     List<String> findEmails();
 
 }
