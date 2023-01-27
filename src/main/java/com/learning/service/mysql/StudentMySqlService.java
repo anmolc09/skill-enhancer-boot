@@ -1,10 +1,7 @@
 package com.learning.service.mysql;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.learning.constants.NumberConstant;
@@ -16,70 +13,53 @@ import com.learning.repository.mysql.StudentRepository;
 import com.learning.service.CommonService;
 import com.learning.utility.excel.reader.StudentReader;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
-public class StudentMySqlService implements CommonService<StudentModel, Long> {
+@Slf4j
+public class StudentMySqlService {
 
     private final StudentRepository studentRepo;
     private final ModelMapper modelMapper;
     private final StudentReader studentReader;
 
-    @Override
-    public List<StudentModel> getAllRecords() {
+    public List<StudentModel> getAllRecords(int count, String sortBy) {
         List<StudentEntity> studentEntityList = studentRepo.findAll();
+        Comparator<StudentEntity> comparator = findSuitableComparator(sortBy);
+        List<StudentModel> studentModelList = new ArrayList<>();
         if (Objects.nonNull(studentEntityList) && studentEntityList.size() > NumberConstant.ZERO) {
-           return studentEntityList.stream().map(studentEntity -> {
-                StudentModel studentModel = modelMapper.map(studentEntity, StudentModel.class);
-                return studentModel;
-            }).collect(Collectors.toList());
-        } else {
-            return Collections.emptyList();
+            if (count == 0 && (Objects.isNull(sortBy) || sortBy.isBlank())) {
+                studentModelList = studentEntityList.stream().map(studentEntity -> {
+                    StudentModel studentModel = modelMapper.map(studentEntity, StudentModel.class);
+                    return studentModel;
+                }).collect(Collectors.toList());
+            } else if (count > 0) {
+                studentModelList = studentEntityList.stream().limit(count).map(studentEntity -> {
+                    StudentModel studentModel = modelMapper.map(studentEntity, StudentModel.class);
+                    return studentModel;
+                }).collect(Collectors.toList());
+            } else {
+                studentModelList = studentEntityList.stream().sorted(comparator).map(studentEntity -> {
+                    StudentModel studentModel = modelMapper.map(studentEntity, StudentModel.class);
+                    return studentModel;
+                }).collect(Collectors.toList());
+            }
+            return studentModelList;
         }
+        return Collections.emptyList();
     }
 
-    @Override
-    public List<StudentModel> getLimitedRecords(int count) {
-        List<StudentEntity> studentEntityList = studentRepo.findAll();
-        if (Objects.nonNull(studentEntityList) && studentEntityList.size() > NumberConstant.ZERO) {
-            return studentEntityList.stream().limit(count).map(studentEntity -> {
-                StudentModel studentModel = modelMapper.map(studentEntity, StudentModel.class);
-                return studentModel;
-            }).collect(Collectors.toList());
-        } else {
-            return Collections.emptyList();
-        }
-    }
-
-    @Override
-    public List<StudentModel> getSortedRecords(String sortBy) {
-        List<StudentEntity> studentEntityList = studentRepo.findAll();
-        if (Objects.nonNull(studentEntityList) && studentEntityList.size() > NumberConstant.ZERO) {
-            Comparator<StudentEntity> comparator = findSuitableComparator(sortBy);
-           return studentEntityList.stream().sorted(comparator).map(studentEntity -> {
-                StudentModel studentModel = modelMapper.map(studentEntity, StudentModel.class);
-                return studentModel;
-            }).collect(Collectors.toList());
-        } else {
-            return Collections.emptyList();
-        }
-    }
-
-    @Override
-    public StudentModel saveRecord(StudentModel studentModel) {
-        if (Objects.nonNull(studentModel)) {
-            StudentEntity entity = modelMapper.map(studentModel, StudentEntity.class);
-            studentRepo.save(entity);
-        }
-        return studentModel;
-    }
-
-    @Override
-    public List<StudentModel> saveAll(List<StudentModel> studentModelList) {
+    public List<StudentModel> saveRecords(List<StudentModel> studentModelList) {
         if (Objects.nonNull(studentModelList) && studentModelList.size() > NumberConstant.ZERO) {
+            if (studentModelList.size() == 1) {
+                StudentEntity entity = modelMapper.map(studentModelList.get(0), StudentEntity.class);
+                studentRepo.save(entity);
+                return Arrays.asList(studentModelList.get(0));
+            }
             List<StudentEntity> studentEntityList = studentModelList.stream().map(studentModel -> {
                 StudentEntity entity = modelMapper.map(studentModel, StudentEntity.class);
                 return entity;
@@ -89,7 +69,6 @@ public class StudentMySqlService implements CommonService<StudentModel, Long> {
         return studentModelList;
     }
 
-    @Override
     public StudentModel getRecordById(Long id) {
         StudentEntity studentEntity = studentRepo.findById(id)
                 .orElseThrow(() -> new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()));
@@ -97,7 +76,6 @@ public class StudentMySqlService implements CommonService<StudentModel, Long> {
         return studentModel;
     }
 
-    @Override
     public StudentModel updateRecord(Long id, StudentModel record) {
         StudentEntity studentEntity = studentRepo.findById(id)
                 .orElseThrow(() -> new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()));
@@ -106,9 +84,12 @@ public class StudentMySqlService implements CommonService<StudentModel, Long> {
             return record;
         }
 
-    @Override
     public void deleteRecordById(Long id) {
-        studentRepo.deleteById(id);
+        if (studentRepo.existsById(id)) {
+            studentRepo.deleteById(id);
+            log.info("deleted");
+        }
+        log.error(ErrorMessages.COULD_NOT_DELETE_RECORD.getErrorMessage());
     }
 
     public void saveExcelFile(MultipartFile file) {
@@ -122,6 +103,7 @@ public class StudentMySqlService implements CommonService<StudentModel, Long> {
             }
         }
     }
+
 
        private Comparator<StudentEntity> findSuitableComparator(String sortBy) {
         Comparator<StudentEntity> comparator;

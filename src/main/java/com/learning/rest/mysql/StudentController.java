@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/student")
 @RequiredArgsConstructor
 public class StudentController {
-	
+
 	private final StudentMySqlService studentService;
 
 	@GetMapping("/{id}")
@@ -21,34 +21,19 @@ public class StudentController {
 	}
 
 	@GetMapping("get-records")
-	public List<StudentModel> getAllRecords (@RequestParam(value = "count" ,required = false , defaultValue = "0") int count,@RequestParam(value = "sortBy", required = false, defaultValue = "") String sortBy) {
-		if (count == 0 && (Objects.isNull(sortBy) || sortBy.isBlank())) {
-			return studentService.getAllRecords();
-		} else if (count > 0) {
-			return studentService.getLimitedRecords(count);
-		} else {
-			return studentService.getSortedRecords(sortBy);
-		}
+	public List<StudentModel> getAllRecords(@RequestParam(value = "count", required = false, defaultValue = "0") int count
+			, @RequestParam(value = "sortBy", required = false, defaultValue = "") String sortBy) {
+		return studentService.getAllRecords(count, sortBy);
 	}
 
 	@PostMapping
-	public List<StudentModel> save(@RequestBody List<StudentModel> studentModelList) {
-		try {
-			if (studentModelList.size() == 1) {
-				return Arrays.asList(studentService.saveRecord(studentModelList.get(0)));
-			} else {
-				return studentService.saveAll(studentModelList);
-			}
-		} catch (Exception exception) {
-			System.out.println("Exception Occurs in StudentController || saveAll");
-			System.err.print(exception);
-			return Collections.emptyList();
-		}
+	public List<StudentModel> saveRecords(@RequestBody List<StudentModel> studentModelList) {
+		return studentService.saveRecords(studentModelList);
 	}
 
 	@PutMapping("/{id}")
-	public StudentModel updateRecordById(@PathVariable Long id ,@RequestBody StudentModel studentModel){
-		return studentService.updateRecord(id,studentModel);
+	public StudentModel updateRecordById(@PathVariable Long id, @RequestBody StudentModel studentModel) {
+		return studentService.updateRecord(id, studentModel);
 	}
 
 	@DeleteMapping("/{id}")
@@ -57,9 +42,8 @@ public class StudentController {
 	}
 
 	@PostMapping("/upload")
-	public String uploadExcelFile(@RequestParam("file") MultipartFile file){
-			studentService.saveExcelFile(file);
-			return "File is uploaded and data is saved to db ";
+	public void uploadExcelFile(@RequestParam("file") MultipartFile file) {
+		studentService.saveExcelFile(file);
 	}
 
 }
