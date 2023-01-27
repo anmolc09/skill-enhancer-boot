@@ -4,7 +4,7 @@ import com.learning.constants.NumberConstant;
 import com.learning.enums.ErrorMessages;
 import com.learning.exceptions.DataNotFoundException;
 import com.learning.models.TimeSlotModel;
-import com.learning.collections.TimeSlotCollection;
+import com.learning.entity.collections.TimeSlotCollection;
 import com.learning.repository.mongo.TimeSlotMongoRepository;
 import com.learning.service.CommonService;
 import lombok.RequiredArgsConstructor;

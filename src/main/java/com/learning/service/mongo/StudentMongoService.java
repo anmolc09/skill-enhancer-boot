@@ -4,7 +4,7 @@ import com.learning.constants.NumberConstant;
 import com.learning.enums.ErrorMessages;
 import com.learning.exceptions.DataNotFoundException;
 import com.learning.models.StudentModel;
-import com.learning.collections.StudentCollection;
+import com.learning.entity.collections.StudentCollection;
 import com.learning.repository.mongo.StudentMongoRepository;
 import com.learning.service.CommonService;
 import lombok.RequiredArgsConstructor;
