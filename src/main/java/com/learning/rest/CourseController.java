@@ -1,4 +1,4 @@
-package com.learning.rest.mysql;
+package com.learning.rest;
 
 import com.learning.models.CourseModel;
 import com.learning.service.mysql.CourseService;

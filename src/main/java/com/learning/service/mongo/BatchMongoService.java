@@ -4,7 +4,7 @@ import com.learning.constants.NumberConstant;
 import com.learning.enums.ErrorMessages;
 import com.learning.exceptions.DataNotFoundException;
 import com.learning.models.BatchModel;
-import com.learning.collections.BatchCollection;
+import com.learning.entity.collections.BatchCollection;
 import com.learning.repository.mongo.BatchMongoRepository;
 import com.learning.service.CommonService;
 import lombok.RequiredArgsConstructor;

@@ -1,5 +1,4 @@
-package com.learning.collections;
-
+package com.learning.entity.collections;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,17 +8,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalTime;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "student_batch")
-public class StudentBatchCollection {
-
+@NoArgsConstructor
+@Document(collection = "timeslot")
+public class TimeSlotCollection {
+	
 	@Id
 	private Long id;
-	private Double fees;
-	private Long studentId;
-	private Long batchId;
+	private LocalTime startTime;
+	private LocalTime endTime;
+	private Long trainerId;
 
 }

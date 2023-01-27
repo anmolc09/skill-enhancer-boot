@@ -4,7 +4,7 @@ spring:
             uri: mongodb://localhost:27017/skill_enhancer_boot
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        password: root
+        password: nikhil #root
         url: jdbc:mysql://localhost:3306/skill_enhancer_boot
         username: root
     jpa:
@@ -14,7 +14,7 @@ spring:
             hibernate:
                 dialect: org.hibernate.dialect.MySQL5InnoDBDialect
                 format_sql: true
-        show-sql: true
+        show-sql: false
     mail:
         host: smtp.gmail.com
         port: 465
@@ -25,7 +25,7 @@ spring:
                     ssl:
                         enable: true
         username: chawlaanmol789@gmail.com
-        password: xognfnhjplawxzjl
+#        password: xognfnhjplawxzjl
 email-config:
     message: EMAIL TESTER RUNNING
     subject: email_sender in spring using thread DATED-27/01/23

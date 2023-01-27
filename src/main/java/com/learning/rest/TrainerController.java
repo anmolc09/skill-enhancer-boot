@@ -1,4 +1,4 @@
-package com.learning.rest.mysql;
+package com.learning.rest;
 
 import java.util.Arrays;
 import java.util.Collections;

@@ -1,10 +1,13 @@
-package com.learning.rest.mysql;
+package com.learning.rest;
 
 import java.util.*;
 
+import com.learning.entity.StudentEntity;
 import com.learning.models.StudentModel;
+import com.learning.service.StudentService;
 import com.learning.service.mysql.StudentMySqlService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class StudentController {
 	
 	private final StudentMySqlService studentService;
+	private final StudentService service;
 
 	@GetMapping("/{id}")
 	public StudentModel getRecordById(@PathVariable Long id) {
@@ -21,14 +25,12 @@ public class StudentController {
 	}
 
 	@GetMapping("get-records")
-	public List<StudentModel> getAllRecords (@RequestParam(value = "count" ,required = false , defaultValue = "0") int count,@RequestParam(value = "sortBy", required = false, defaultValue = "") String sortBy) {
-		if (count == 0 && (Objects.isNull(sortBy) || sortBy.isBlank())) {
-			return studentService.getAllRecords();
-		} else if (count > 0) {
-			return studentService.getLimitedRecords(count);
-		} else {
-			return studentService.getSortedRecords(sortBy);
-		}
+	public List<StudentModel> getAllRecords (
+			@RequestParam(value = "page", required = false , defaultValue = "0") int page,
+			@RequestParam(value = "limit", required = false , defaultValue = "0") int limit,
+			@RequestParam(value = "sortBy", required = false, defaultValue = "") String sortBy) {
+
+		return service.getAllRecordByPaginationAndSorting(page,limit,sortBy) ;
 	}
 
 	@PostMapping

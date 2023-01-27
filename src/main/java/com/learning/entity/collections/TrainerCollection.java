@@ -1,4 +1,4 @@
-package com.learning.collections;
+package com.learning.entity.collections;
 
 
 import lombok.AllArgsConstructor;

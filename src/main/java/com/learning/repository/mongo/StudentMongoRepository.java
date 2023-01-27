@@ -1,6 +1,6 @@
 package com.learning.repository.mongo;
 
-import com.learning.collections.StudentCollection;
+import com.learning.entity.collections.StudentCollection;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 
