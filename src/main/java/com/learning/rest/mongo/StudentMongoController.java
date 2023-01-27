@@ -1,4 +1,4 @@
-package com.learning.mongo.mongoController;
+package com.learning.rest.mongo;
 
 import com.learning.models.StudentModel;
 import com.learning.service.mongo.StudentMongoService;

@@ -1,4 +1,4 @@
-package com.learning.rest;
+package com.learning.rest.mysql;
 
 import java.util.*;
 
