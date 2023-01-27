@@ -19,12 +19,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class TrainerService implements CommonService<TrainerModel, Long> {
+public class TrainerService {
 
     private final TrainerRepository trainerRepo;
     private final ModelMapper modelMapper;
 
-    @Override
     public List<TrainerModel> getAllRecords() {
         List<TrainerEntity> trainerEntityList = trainerRepo.findAll();
         if (Objects.nonNull(trainerEntityList) && trainerEntityList.size() > NumberConstant.ZERO) {
@@ -39,7 +38,6 @@ public class TrainerService implements CommonService<TrainerModel, Long> {
         }
     }
 
-    @Override
     public List<TrainerModel> getLimitedRecords(int count) {
         List<TrainerEntity> trainerEntityList = trainerRepo.findAll();
         if (Objects.nonNull(trainerEntityList) && trainerEntityList.size() > NumberConstant.ZERO) {
@@ -55,7 +53,6 @@ public class TrainerService implements CommonService<TrainerModel, Long> {
         }
     }
 
-    @Override
     public List<TrainerModel> getSortedRecords(String sortBy) {
         List<TrainerEntity> trainerEntityList = trainerRepo.findAll();
         if (Objects.nonNull(trainerEntityList) && trainerEntityList.size() > NumberConstant.ZERO) {
@@ -72,7 +69,6 @@ public class TrainerService implements CommonService<TrainerModel, Long> {
         }
     }
 
-    @Override
     public TrainerModel saveRecord(TrainerModel trainerModel) {
         if (Objects.nonNull(trainerModel)) {
             TrainerEntity entity = modelMapper.map(trainerModel, TrainerEntity.class);
@@ -81,7 +77,6 @@ public class TrainerService implements CommonService<TrainerModel, Long> {
         return trainerModel;
     }
 
-    @Override
     public List<TrainerModel> saveAll(List<TrainerModel> trainerModelList) {
         if (Objects.nonNull(trainerModelList) && trainerModelList.size() > NumberConstant.ZERO) {
             List<TrainerEntity> trainerEntityList = trainerModelList.stream()
@@ -95,7 +90,6 @@ public class TrainerService implements CommonService<TrainerModel, Long> {
         return trainerModelList;
     }
 
-    @Override
     public TrainerModel getRecordById(Long id) {
         TrainerEntity trainerEntity = trainerRepo.findById(id)
 				.orElseThrow(() -> new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()));
@@ -103,7 +97,6 @@ public class TrainerService implements CommonService<TrainerModel, Long> {
         return trainerModel;
     }
 
-    @Override
     public TrainerModel updateRecord(Long id, TrainerModel record) {
         TrainerEntity trainerEntity = trainerRepo.findById(id)
                 .orElseThrow(() -> new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()));
@@ -112,7 +105,6 @@ public class TrainerService implements CommonService<TrainerModel, Long> {
         return  record;
     }
 
-    @Override
     public void deleteRecordById(Long id) {
         trainerRepo.deleteById(id);
     }

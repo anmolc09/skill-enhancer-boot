@@ -19,12 +19,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class StudentBatchService implements CommonService<StudentBatchModel, Long> {
+public class StudentBatchService  {
 
     private final StudentBatchRepository studentBatchRepo;
     private final ModelMapper modelMapper;
 
-    @Override
     public List<StudentBatchModel> getAllRecords() {
         List<StudentBatchEntity> studentBatchEntityList = studentBatchRepo.findAll();
         if (Objects.nonNull(studentBatchEntityList) && studentBatchEntityList.size() > NumberConstant.ZERO) {
@@ -37,7 +36,6 @@ public class StudentBatchService implements CommonService<StudentBatchModel, Lon
         }
     }
 
-    @Override
     public List<StudentBatchModel> getLimitedRecords(int count) {
         List<StudentBatchEntity> studentBatchEntityList = studentBatchRepo.findAll();
         if (Objects.nonNull(studentBatchEntityList) && studentBatchEntityList.size() > NumberConstant.ZERO) {
@@ -51,7 +49,6 @@ public class StudentBatchService implements CommonService<StudentBatchModel, Lon
         }
     }
 
-    @Override
     public List<StudentBatchModel> getSortedRecords(String sortBy) {
         List<StudentBatchEntity> studentBatchEntityList = studentBatchRepo.findAll();
         if (Objects.nonNull(studentBatchEntityList) && studentBatchEntityList.size() > NumberConstant.ZERO) {
@@ -66,7 +63,6 @@ public class StudentBatchService implements CommonService<StudentBatchModel, Lon
         }
     }
 
-    @Override
     public StudentBatchModel saveRecord(StudentBatchModel studentBatchModel) {
         if (Objects.nonNull(studentBatchModel)) {
             studentBatchRepo.save(modelMapper.map(studentBatchModel, StudentBatchEntity.class));
@@ -74,7 +70,6 @@ public class StudentBatchService implements CommonService<StudentBatchModel, Lon
         return studentBatchModel;
     }
 
-    @Override
     public List<StudentBatchModel> saveAll(List<StudentBatchModel> studentBatchModelList) {
         if (Objects.nonNull(studentBatchModelList) && studentBatchModelList.size() > NumberConstant.ZERO) {
             List<StudentBatchEntity> studentBatchEntityList = studentBatchModelList.stream().map(studentBatchModel -> {
@@ -86,7 +81,6 @@ public class StudentBatchService implements CommonService<StudentBatchModel, Lon
         return studentBatchModelList;
     }
 
-    @Override
     public StudentBatchModel getRecordById(Long id) {
         StudentBatchEntity studentBatchEntity = studentBatchRepo.findById(id)
 				.orElseThrow(() -> new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()));
@@ -94,7 +88,6 @@ public class StudentBatchService implements CommonService<StudentBatchModel, Lon
         return studentBatchModel;
     }
 
-    @Override
     public StudentBatchModel updateRecord(Long id, StudentBatchModel record) {
         StudentBatchEntity studentBatchEntity = studentBatchRepo.findById(id)
                 .orElseThrow(() -> new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()));
@@ -103,7 +96,6 @@ public class StudentBatchService implements CommonService<StudentBatchModel, Lon
             return record;
         }
 
-    @Override
     public void deleteRecordById(Long id) {
         studentBatchRepo.deleteById(id);
     }

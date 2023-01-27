@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.learning.models.TimeSlotModel;
-import com.learning.service.mysql.TimeSlotService;
+import com.learning.service.TimeSlotService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,30 +17,18 @@ public class TimeSlotController {
 
     private final TimeSlotService timeSlotService;
 
-    @GetMapping
-    public List<TimeSlotModel> getAllRecords(@RequestParam(value = "count", required = false, defaultValue = "0") int count, @RequestParam(value = "sortBy", required = false, defaultValue = "") String sortBy) {
-        if (count == 0 && (Objects.isNull(sortBy) || sortBy.isBlank())) {
-            return timeSlotService.getAllRecords();
-        } else if (count > 0) {
-            return timeSlotService.getLimitedRecords(count);
-        } else {
-            return timeSlotService.getSortedRecords(sortBy);
-        }
-    }
+  @GetMapping("/get-records")
+  public List<TimeSlotModel> getAllRecords(
+          @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+          @RequestParam(value = "limit", required = false, defaultValue = "0") int limit,
+          @RequestParam(value = "sortBy", required = false, defaultValue = "") String sortBy) {
+
+      return timeSlotService.getAllRecordByPaginationAndSorting(page, limit, sortBy);
+  }
 
     @PostMapping
-    public List<TimeSlotModel> save(@RequestBody List<TimeSlotModel> timeSlotModelList) {
-        try {
-            if (timeSlotModelList.size() == 1) {
-                return Arrays.asList(timeSlotService.saveRecord(timeSlotModelList.get(0)));
-            } else {
-                return timeSlotService.saveAll(timeSlotModelList);
-            }
-        } catch (Exception exception) {
-            System.out.println("Exception Occurs in StudentController || saveAll");
-            System.err.print(exception);
-            return Collections.emptyList();
-        }
+    public List<TimeSlotModel> saveRecords(@RequestBody List<TimeSlotModel> timeSlotModelList) {
+       return timeSlotService.saveRecords(timeSlotModelList);
     }
 
     @PutMapping("/{id}")
@@ -59,3 +47,15 @@ public class TimeSlotController {
     }
 
 }
+
+  /*  @GetMapping
+    public List<TimeSlotModel> getAllRecords(@RequestParam(value = "count", required = false, defaultValue = "0") int count, @RequestParam(value = "sortBy", required = false, defaultValue = "") String sortBy) {
+        if (count == 0 && (Objects.isNull(sortBy) || sortBy.isBlank())) {
+            return timeSlotService.getAllRecords();
+        } else if (count > 0) {
+            return timeSlotService.getLimitedRecords(count);
+        } else {
+            return timeSlotService.getSortedRecords(sortBy);
+        }
+    }
+*/

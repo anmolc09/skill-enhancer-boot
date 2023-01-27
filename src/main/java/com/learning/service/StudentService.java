@@ -7,6 +7,7 @@ import com.learning.exceptions.DataNotFoundException;
 import com.learning.models.StudentModel;
 import com.learning.repository.mongo.StudentMongoRepository;
 import com.learning.repository.mysql.StudentRepository;
+import com.learning.utility.email.EmailSender;
 import com.learning.utility.excel.reader.StudentReader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ public class StudentService {
 
     private final StudentRepository jpaRepo;
     private final StudentMongoRepository mongoRepo;
+    private final EmailSender emailSender;
     private final ModelMapper modelMapper;
     private final StudentReader studentReader;
 
@@ -37,12 +39,12 @@ public class StudentService {
                 .stream().map(studentEntity -> modelMapper.map(studentEntity, StudentModel.class))
                 .collect(Collectors.toList());
 
-        if(!CollectionUtils.isEmpty(studentModelListMongo)) {
+        if (!CollectionUtils.isEmpty(studentModelListMongo)) {
             return studentModelListMongo;
         }
         return jpaRepo.findAll(PageRequest.of(page, limit, Sort.by(sortBy)))
-                    .stream().map(studentEntity -> modelMapper.map(studentEntity, StudentModel.class))
-                    .collect(Collectors.toList());
+                .stream().map(studentEntity -> modelMapper.map(studentEntity, StudentModel.class))
+                .collect(Collectors.toList());
     }
 
     public List<StudentModel> saveRecords(List<StudentModel> studentModelList) {
@@ -78,7 +80,6 @@ public class StudentService {
     }
 
     public void saveExcelFile(MultipartFile file) {
-        //check that file is of excel type or not
         if (file.getContentType().equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")) {
             try {
                 List<StudentEntity> studentEntityList = studentReader.getStudentObjects(file.getInputStream());
@@ -87,6 +88,12 @@ public class StudentService {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void emailSender() {
+        List<String> emails = jpaRepo.findEmails();
+        emailSender.mailSenderThread(emails);
+        ;
     }
 
     private List<StudentEntity> convertModelListToEntityList(List<StudentModel> studentModelList) {

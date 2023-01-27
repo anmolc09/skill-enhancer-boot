@@ -11,18 +11,10 @@ import org.springframework.data.domain.Page;
 
 
 @SpringBootApplication
-public class SkillEnhancerApplication implements CommandLineRunner {
-
-    @Autowired
-    private StudentService studentService;
+public class SkillEnhancerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SkillEnhancerApplication.class, args);
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-//        Page<StudentEntity> studentEntities = studentService.getAllRecordByPaginationAndSorting(0, 5, "name");
-//        System.out.println(studentEntities);
-    }
 }

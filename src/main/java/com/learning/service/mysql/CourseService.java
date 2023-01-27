@@ -24,7 +24,6 @@ public class CourseService implements CommonService<CourseModel, Long> {
     private final CourseRepository courseRepo;
     private final ModelMapper modelMapper;
 
-    @Override
     public List<CourseModel> getAllRecords() {
         List<CourseEntity> courseEntityList = courseRepo.findAll();
         if (Objects.nonNull(courseEntityList) && courseEntityList.size() > NumberConstant.ZERO) {
@@ -38,7 +37,6 @@ public class CourseService implements CommonService<CourseModel, Long> {
         }
     }
 
-    @Override
     public List<CourseModel> getLimitedRecords(int count) {
         List<CourseEntity> courseEntityList = courseRepo.findAll();
         if (Objects.nonNull(courseEntityList) && courseEntityList.size() > NumberConstant.ZERO) {
@@ -52,7 +50,6 @@ public class CourseService implements CommonService<CourseModel, Long> {
         }
     }
 
-    @Override
     public List<CourseModel> getSortedRecords(String sortBy) {
         List<CourseEntity> courseEntityList = courseRepo.findAll();
         if (Objects.nonNull(courseEntityList) && courseEntityList.size() > NumberConstant.ZERO) {
@@ -67,7 +64,6 @@ public class CourseService implements CommonService<CourseModel, Long> {
         }
     }
 
-    @Override
     public CourseModel saveRecord(CourseModel courseModel) {
         if (Objects.nonNull(courseModel)) {
             courseRepo.save(modelMapper.map(courseModel, CourseEntity.class));
@@ -75,7 +71,6 @@ public class CourseService implements CommonService<CourseModel, Long> {
         return courseModel;
     }
 
-    @Override
     public List<CourseModel> saveAll(List<CourseModel> courseModelList) {
         if (Objects.nonNull(courseModelList) && courseModelList.size() > NumberConstant.ZERO) {
             List<CourseEntity> courseEntityList = courseModelList.stream()
@@ -89,7 +84,6 @@ public class CourseService implements CommonService<CourseModel, Long> {
         return courseModelList;
     }
 
-    @Override
     public CourseModel getRecordById(Long id) {
         CourseEntity courseEntity = courseRepo.findById(id)
                 .orElseThrow(() -> new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()));
@@ -97,7 +91,6 @@ public class CourseService implements CommonService<CourseModel, Long> {
         return courseModel;
     }
 
-    @Override
     public CourseModel updateRecord(Long id, CourseModel record) {
         CourseEntity courseEntity = courseRepo.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()));
         modelMapper.map(record, courseEntity);
@@ -105,7 +98,6 @@ public class CourseService implements CommonService<CourseModel, Long> {
         return record;
     }
 
-    @Override
     public void deleteRecordById(Long id) {
         courseRepo.deleteById(id);
     }

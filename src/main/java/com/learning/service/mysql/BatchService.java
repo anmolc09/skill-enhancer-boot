@@ -19,12 +19,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class BatchService implements CommonService<BatchModel, Long> {
+public class BatchService {
 
     private final BatchRepository batchRepo;
     private final ModelMapper modelMapper;
 
-    @Override
     public List<BatchModel> getAllRecords() {
         List<BatchEntity> batchEntityList = batchRepo.findAll();
         if (Objects.nonNull(batchEntityList) && batchEntityList.size() > NumberConstant.ZERO) {
@@ -37,7 +36,6 @@ public class BatchService implements CommonService<BatchModel, Long> {
         }
     }
 
-    @Override
     public List<BatchModel> getLimitedRecords(int count) {
         List<BatchEntity> batchEntityList = batchRepo.findAll();
         if (Objects.nonNull(batchEntityList) && batchEntityList.size() > NumberConstant.ZERO) {
@@ -50,7 +48,6 @@ public class BatchService implements CommonService<BatchModel, Long> {
         }
     }
 
-    @Override
     public List<BatchModel> getSortedRecords(String sortBy) {
         List<BatchEntity> batchEntityList = batchRepo.findAll();
         Comparator<BatchEntity> comparator = findSuitableComparator(sortBy);
@@ -64,7 +61,6 @@ public class BatchService implements CommonService<BatchModel, Long> {
         }
     }
 
-    @Override
     public BatchModel saveRecord(BatchModel record) {
         if (Objects.nonNull(record)) {
             BatchEntity entity = modelMapper.map(record, BatchEntity.class);
@@ -73,7 +69,6 @@ public class BatchService implements CommonService<BatchModel, Long> {
         return record;
     }
 
-    @Override
     public List<BatchModel> saveAll(List<BatchModel> batchModelList) {
         if (Objects.nonNull(batchModelList) && batchModelList.size() > NumberConstant.ZERO) {
             List<BatchEntity> batchEntityList = batchModelList.stream().map(batchModel -> {
@@ -85,7 +80,6 @@ public class BatchService implements CommonService<BatchModel, Long> {
         return batchModelList;
     }
 
-    @Override
     public BatchModel getRecordById(Long id) {
         BatchEntity batchEntity = batchRepo.findById(id)
                 .orElseThrow(() -> new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()));
@@ -93,7 +87,6 @@ public class BatchService implements CommonService<BatchModel, Long> {
         return batchModel;
     }
 
-    @Override
     public BatchModel updateRecord(Long id, BatchModel record) {
         BatchEntity batchEntity = batchRepo.findById(id).orElseThrow(() -> new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()));
             modelMapper.map(record, batchEntity);
@@ -101,7 +94,6 @@ public class BatchService implements CommonService<BatchModel, Long> {
             return record;
         }
 
-    @Override
     public void deleteRecordById(Long id) {
         batchRepo.deleteById(id);
     }
