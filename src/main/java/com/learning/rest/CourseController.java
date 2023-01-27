@@ -1,7 +1,7 @@
 package com.learning.rest;
 
 import com.learning.models.CourseModel;
-import com.learning.service.impl.CourseService;
+import com.learning.service.mysql.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.learning.models.TimeSlotModel;
-import com.learning.service.impl.TimeSlotService;
+import com.learning.service.mysql.TimeSlotService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

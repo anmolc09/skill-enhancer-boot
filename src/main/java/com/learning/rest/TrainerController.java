@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.learning.models.TrainerModel;
-import com.learning.service.impl.TrainerService;
+import com.learning.service.mysql.TrainerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,7 +1,7 @@
 package com.learning.mongo.mongoController;
 
 import com.learning.models.StudentModel;
-import com.learning.mongo.mongoservice.StudentMongoService;
+import com.learning.service.mongo.StudentMongoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.learning.models.BatchModel;
-import com.learning.service.impl.BatchService;
+import com.learning.service.mysql.BatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

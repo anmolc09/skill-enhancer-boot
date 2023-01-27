@@ -3,7 +3,7 @@ package com.learning.rest;
 import java.util.*;
 
 import com.learning.models.StudentModel;
-import com.learning.service.impl.StudentService;
+import com.learning.service.mysql.StudentMySqlService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class StudentController {
 	
-	private final StudentService studentService;
+	private final StudentMySqlService studentService;
 
 	@GetMapping("/{id}")
 	public StudentModel getRecordById(@PathVariable Long id) {
