@@ -2,6 +2,7 @@ package com.learning.service;
 
 import com.learning.constants.NumberConstant;
 import com.learning.entity.StudentEntity;
+import com.learning.entity.collections.StudentCollection;
 import com.learning.enums.ErrorMessages;
 import com.learning.exceptions.DataNotFoundException;
 import com.learning.models.StudentModel;
@@ -35,10 +36,10 @@ public class StudentService {
     private final StudentReader studentReader;
 
     public List<StudentModel> getAllRecordByPaginationAndSorting(int page, int limit, String sortBy) {
+
         List<StudentModel> studentModelListMongo = mongoRepo.findAll(PageRequest.of(page, limit, Sort.by(sortBy)))
                 .stream().map(studentEntity -> modelMapper.map(studentEntity, StudentModel.class))
                 .collect(Collectors.toList());
-
         if (!CollectionUtils.isEmpty(studentModelListMongo)) {
             return studentModelListMongo;
         }
@@ -47,6 +48,7 @@ public class StudentService {
                 .collect(Collectors.toList());
     }
 
+    //TODO : save data in mongo
     public List<StudentModel> saveRecords(List<StudentModel> studentModelList) {
         if (Objects.nonNull(studentModelList) && studentModelList.size() > NumberConstant.ZERO) {
             List<StudentEntity> studentEntityList = convertModelListToEntityList(studentModelList);
@@ -98,6 +100,12 @@ public class StudentService {
     public void sendMailWithAttachment() {
         List<String> emails = jpaRepo.findEmails();
         emailSender.sendMailWithAttachment(emails);
+    }
+
+    public void transferMySqlDataToMongo() {
+        List<StudentCollection> studentCollection = jpaRepo.findAll().stream().map(studentEntity -> modelMapper
+                .map(studentEntity, StudentCollection.class)).collect(Collectors.toList());
+        mongoRepo.saveAll(studentCollection);
     }
 
     private List<StudentEntity> convertModelListToEntityList(List<StudentModel> studentModelList) {

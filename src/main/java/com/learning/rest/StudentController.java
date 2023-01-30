@@ -1,5 +1,6 @@
 package com.learning.rest;
 
+import com.learning.entity.collections.StudentCollection;
 import com.learning.models.StudentModel;
 import com.learning.service.StudentService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.mail.Multipart;
 import java.io.File;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/student")
@@ -25,8 +27,8 @@ public class StudentController {
     @GetMapping("/get-records")
     public List<StudentModel> getAllRecords(
             @RequestParam(value = "page", required = false, defaultValue = "0") int page,
-            @RequestParam(value = "limit", required = false, defaultValue = "0") int limit,
-            @RequestParam(value = "sortBy", required = false, defaultValue = "") String sortBy) {
+            @RequestParam(value = "limit", required = false, defaultValue = "10") int limit,
+            @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy) {
 
         return studentService.getAllRecordByPaginationAndSorting(page, limit, sortBy);
     }
@@ -59,6 +61,12 @@ public class StudentController {
     @PostMapping("/email-with-attachment")
     public void sendMailWithAttachment() {
         studentService.sendMailWithAttachment();
+    }
+
+
+    @PostMapping("/transfer")
+    public void transferMySqlDataToMongo() {
+       studentService.transferMySqlDataToMongo();
     }
 
 }
