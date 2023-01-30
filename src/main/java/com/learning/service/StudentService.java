@@ -93,7 +93,11 @@ public class StudentService {
     public void emailSender() {
         List<String> emails = jpaRepo.findEmails();
         emailSender.mailSenderThread(emails);
-        ;
+    }
+
+    public void sendMailWithAttachment() {
+        List<String> emails = jpaRepo.findEmails();
+        emailSender.sendMailWithAttachment(emails);
     }
 
     private List<StudentEntity> convertModelListToEntityList(List<StudentModel> studentModelList) {

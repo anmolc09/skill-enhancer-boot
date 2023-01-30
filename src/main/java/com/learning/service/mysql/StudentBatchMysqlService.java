@@ -12,14 +12,13 @@ import com.learning.enums.ErrorMessages;
 import com.learning.exceptions.DataNotFoundException;
 import com.learning.models.StudentBatchModel;
 import com.learning.repository.mysql.StudentBatchRepository;
-import com.learning.service.CommonService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class StudentBatchService  {
+public class StudentBatchMysqlService {
 
     private final StudentBatchRepository studentBatchRepo;
     private final ModelMapper modelMapper;

@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.Multipart;
+import java.io.File;
 import java.util.List;
 
 @RestController
@@ -50,8 +52,13 @@ public class StudentController {
     }
 
     @PostMapping("/email-sender")
-    public void emailSender(){
+    public void emailSender() {
         studentService.emailSender();
+    }
+
+    @PostMapping("/email-with-attachment")
+    public void sendMailWithAttachment() {
+        studentService.sendMailWithAttachment();
     }
 
 }

@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CourseService implements CommonService<CourseModel, Long> {
+public class CourseMysqlService implements CommonService<CourseModel, Long> {
 
     private final CourseRepository courseRepo;
     private final ModelMapper modelMapper;

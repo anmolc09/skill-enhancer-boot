@@ -25,9 +25,10 @@ spring:
                     ssl:
                         enable: true
         username: chawlaanmol789@gmail.com
-      #  password: xognfnhjplawxzjl
+       # password: {Your password here }
 email-config:
     message: EMAIL TESTER RUNNING -POST EMAIL API
-    subject: email_sender in spring using thread DATED-28/01/23
+    subject: email_sender in spring using thread DATED-30/01/23
     sendTo: anmolc09@gmail.com
     from: chawlaanmol789@gmail.com
+    attachment: C:\Users\anmol\Downloads\chand-pe-hai-apun.jpg

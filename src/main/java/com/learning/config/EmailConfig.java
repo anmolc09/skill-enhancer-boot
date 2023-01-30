@@ -15,5 +15,6 @@ public class EmailConfig {
     private String subject;
     private String sendTo;
     private String from;
+    private String attachment;
 
 }
