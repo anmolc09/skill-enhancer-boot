@@ -12,14 +12,13 @@ import com.learning.enums.ErrorMessages;
 import com.learning.exceptions.DataNotFoundException;
 import com.learning.models.CourseModel;
 import com.learning.repository.mysql.CourseRepository;
-import com.learning.service.CommonService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CourseMysqlService implements CommonService<CourseModel, Long> {
+public class CourseMysqlService {
 
     private final CourseRepository courseRepo;
     private final ModelMapper modelMapper;

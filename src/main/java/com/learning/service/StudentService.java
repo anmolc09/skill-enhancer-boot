@@ -93,13 +93,11 @@ public class StudentService {
     }
 
     public void emailSender() {
-        List<String> emails = jpaRepo.findEmails();
-        emailSender.mailSenderThread(emails);
+        emailSender.mailSenderThread(jpaRepo.findEmails());
     }
 
     public void sendMailWithAttachment() {
-        List<String> emails = jpaRepo.findEmails();
-        emailSender.sendMailWithAttachment(emails);
+        emailSender.sendMailWithAttachment(jpaRepo.findEmails());
     }
 
     public void transferMySqlDataToMongo() {

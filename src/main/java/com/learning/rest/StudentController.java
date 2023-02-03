@@ -1,16 +1,12 @@
 package com.learning.rest;
 
-import com.learning.entity.collections.StudentCollection;
 import com.learning.models.StudentModel;
 import com.learning.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.mail.Multipart;
-import java.io.File;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/student")
@@ -53,16 +49,15 @@ public class StudentController {
         studentService.saveExcelFile(file);
     }
 
-    @PostMapping("/email-sender")
+    @PostMapping("/email")
     public void emailSender() {
         studentService.emailSender();
     }
 
-    @PostMapping("/email-with-attachment")
+    @PostMapping("/email/attachment")
     public void sendMailWithAttachment() {
         studentService.sendMailWithAttachment();
     }
-
 
     @PostMapping("/transfer")
     public void transferMySqlDataToMongo() {
