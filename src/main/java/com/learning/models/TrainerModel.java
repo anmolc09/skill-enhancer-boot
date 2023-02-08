@@ -1,18 +1,14 @@
 package com.learning.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.Objects;
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 public class TrainerModel {
 
-	private Long id;
-	private String name;
-	private String specialisation;
-	
-	}
+    private Long id;
+    private String name;
+    private String specialization;
+
+}

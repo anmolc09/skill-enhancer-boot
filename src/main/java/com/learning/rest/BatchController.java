@@ -44,14 +44,3 @@ public class BatchController {
 	}
 
 }
-
-/*	@GetMapping
-	public List<BatchModel> getAllRecords(@RequestParam(value = "count" ,required = false , defaultValue = "0") int count, @RequestParam(value = "sortBy", required = false, defaultValue = "") String sortBy) {
-		if (count == 0 && (Objects.isNull(sortBy) || sortBy.isBlank())) {
-			return batchService.getAllRecords();
-		} else if (count > 0) {
-			return batchService.getLimitedRecords(count);
-		} else {
-			return batchService.getSortedRecords(sortBy);
-		}
-	}*/

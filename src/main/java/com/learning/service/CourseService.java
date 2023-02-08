@@ -5,13 +5,16 @@ import com.learning.entity.CourseEntity;
 import com.learning.enums.ErrorMessages;
 import com.learning.exceptions.DataNotFoundException;
 import com.learning.models.CourseModel;
+import com.learning.repository.mongo.CourseMongoRepository;
 import com.learning.repository.mysql.CourseRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -22,10 +25,19 @@ import java.util.stream.Collectors;
 public class CourseService {
 
     private final CourseRepository jpaRepo;
+    private final CourseMongoRepository mongoRepo;
     private final ModelMapper modelMapper;
 
     public List<CourseModel> getAllRecordByPaginationAndSorting(int page, int limit, String sortBy) {
-        return Collections.emptyList();
+        List<CourseModel> courseModelListMongo = mongoRepo.findAll(PageRequest.of(page, limit, Sort.by(sortBy))).stream()
+                .map(courseCollection -> modelMapper.map(courseCollection, CourseModel.class))
+                .collect(Collectors.toList());
+
+        if (!CollectionUtils.isEmpty(courseModelListMongo)) return courseModelListMongo;
+
+        return jpaRepo.findAll(PageRequest.of(page, limit, Sort.by(sortBy))).stream()
+                .map(courseEntity -> modelMapper.map(courseEntity, CourseModel.class))
+                .collect(Collectors.toList());
     }
 
     public List<CourseModel> saveRecords(List<CourseModel> courseModelList) {

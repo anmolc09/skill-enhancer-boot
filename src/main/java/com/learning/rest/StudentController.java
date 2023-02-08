@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public List<StudentModel> saveRecords(@RequestBody List<StudentModel> studentModelList) {
+    public List<StudentModel> saveRecords(@RequestBody @Valid List<StudentModel> studentModelList) {
         return studentService.saveRecords(studentModelList);
     }
 
@@ -65,10 +66,3 @@ public class StudentController {
     }
 
 }
-/*
-    @GetMapping("get-records")
-    public List<StudentModel> getAllRecords(@RequestParam(value = "count", required = false, defaultValue = "0") int count
-            , @RequestParam(value = "sortBy", required = false, defaultValue = "") String sortBy) {
-        return studentService.getAllRecords(count, sortBy);
-    }
-*/

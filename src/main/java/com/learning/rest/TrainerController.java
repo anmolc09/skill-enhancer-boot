@@ -44,14 +44,3 @@ public class TrainerController {
     }
 
 }
-  /*  @GetMapping
-    public List<TrainerModel> getAllRecords(@RequestParam(value = "count", required = false, defaultValue = "0") int count, @RequestParam(value = "sortBy", required = false, defaultValue = "") String sortBy) {
-        if (count == 0 && (Objects.isNull(sortBy) || sortBy.isBlank())) {
-            return trainerService.getAllRecords();
-        } else if (count > 0) {
-            return trainerService.getLimitedRecords(count);
-        } else {
-            return trainerService.getSortedRecords(sortBy);
-        }
-
-    }*/

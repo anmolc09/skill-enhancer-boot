@@ -47,15 +47,3 @@ public class TimeSlotController {
     }
 
 }
-
-  /*  @GetMapping
-    public List<TimeSlotModel> getAllRecords(@RequestParam(value = "count", required = false, defaultValue = "0") int count, @RequestParam(value = "sortBy", required = false, defaultValue = "") String sortBy) {
-        if (count == 0 && (Objects.isNull(sortBy) || sortBy.isBlank())) {
-            return timeSlotService.getAllRecords();
-        } else if (count > 0) {
-            return timeSlotService.getLimitedRecords(count);
-        } else {
-            return timeSlotService.getSortedRecords(sortBy);
-        }
-    }
-*/

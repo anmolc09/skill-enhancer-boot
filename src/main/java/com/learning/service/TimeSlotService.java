@@ -5,11 +5,15 @@ import com.learning.entity.TimeSlotEntity;
 import com.learning.enums.ErrorMessages;
 import com.learning.exceptions.DataNotFoundException;
 import com.learning.models.TimeSlotModel;
+import com.learning.repository.mongo.TimeSlotMongoRepository;
 import com.learning.repository.mysql.TimeSlotRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,10 +26,19 @@ import java.util.stream.Collectors;
 public class TimeSlotService {
 
     private final TimeSlotRepository jpaRepo;
+    private final TimeSlotMongoRepository mongoRepo;
     private final ModelMapper modelMapper;
 
     public List<TimeSlotModel> getAllRecordByPaginationAndSorting(int page, int limit, String sortBy) {
-        return Collections.emptyList();
+        List<TimeSlotModel> timeSlotModelListMongo = mongoRepo.findAll(PageRequest.of(page, limit, Sort.by(sortBy))).stream()
+                .map(timeSlotCollection -> modelMapper.map(timeSlotCollection, TimeSlotModel.class))
+                .collect(Collectors.toList());
+
+        if(!CollectionUtils.isEmpty(timeSlotModelListMongo)) return timeSlotModelListMongo;
+
+        return jpaRepo.findAll(PageRequest.of(page, limit, Sort.by(sortBy))).stream()
+                .map(timeSlotEntity -> modelMapper.map(timeSlotEntity, TimeSlotModel.class))
+                .collect(Collectors.toList());
     }
 
     public List<TimeSlotModel> saveRecords(List<TimeSlotModel> timeSlotModelList) {

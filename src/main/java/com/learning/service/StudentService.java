@@ -38,7 +38,7 @@ public class StudentService {
     public List<StudentModel> getAllRecordByPaginationAndSorting(int page, int limit, String sortBy) {
 
         List<StudentModel> studentModelListMongo = mongoRepo.findAll(PageRequest.of(page, limit, Sort.by(sortBy)))
-                .stream().map(studentEntity -> modelMapper.map(studentEntity, StudentModel.class))
+                .stream().map(studentCollection -> modelMapper.map(studentCollection, StudentModel.class))
                 .collect(Collectors.toList());
         if (!CollectionUtils.isEmpty(studentModelListMongo)) {
             return studentModelListMongo;
@@ -65,6 +65,8 @@ public class StudentService {
         return studentModel;
     }
 
+
+//TODO : validate before changing
     public StudentModel updateRecord(Long id, StudentModel record) {
         StudentEntity studentEntity = jpaRepo.findById(id)
                 .orElseThrow(() -> new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()));

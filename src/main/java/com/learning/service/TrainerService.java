@@ -5,11 +5,15 @@ import com.learning.entity.TrainerEntity;
 import com.learning.enums.ErrorMessages;
 import com.learning.exceptions.DataNotFoundException;
 import com.learning.models.TrainerModel;
+import com.learning.repository.mongo.TrainerMongoRepository;
 import com.learning.repository.mysql.TrainerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,9 +26,17 @@ import java.util.stream.Collectors;
 public class TrainerService {
 
     private final TrainerRepository jpaRepo;
+    private final TrainerMongoRepository mongoRepo;
     private final ModelMapper modelMapper;
     public List<TrainerModel> getAllRecordByPaginationAndSorting(int page, int limit, String sortBy) {
-        return Collections.emptyList();
+        List<TrainerModel> trainerModelListMongo = mongoRepo.findAll(PageRequest.of(page, limit, Sort.by(sortBy))).stream()
+                .map(trainerCollection -> modelMapper.map(trainerCollection, TrainerModel.class))
+                .collect(Collectors.toList());
+        if (!CollectionUtils.isEmpty(trainerModelListMongo)) return trainerModelListMongo;
+
+        return jpaRepo.findAll(PageRequest.of(page, limit, Sort.by(sortBy))).stream()
+                .map(trainerEntity -> modelMapper.map(trainerEntity, TrainerModel.class))
+                .collect(Collectors.toList());
     }
 
     public List<TrainerModel> saveRecords(List<TrainerModel> trainerModelList) {
@@ -55,6 +67,7 @@ public class TrainerService {
         return record;
     }
 
+    //TODO: create info messages
     public void deleteRecordById(Long id) {
         if (jpaRepo.existsById(id)) {
             jpaRepo.deleteById(id);

@@ -1,18 +1,16 @@
 package com.learning.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 public class StudentModel {
 
-	private Long id;
-	private String name;
-	private Long contactDetails;
-	private String qualification;
-	private String email;
-	
+    private Long id;
+    private String name;
+    private Long contactDetails;
+    private String qualification;
+    private String email;
+
 }

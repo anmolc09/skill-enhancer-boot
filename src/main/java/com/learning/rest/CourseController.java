@@ -35,14 +35,3 @@ public class CourseController {
     }
 
 }
-
-    /*@GetMapping
-    public List<CourseModel> getAllRecords(@RequestParam(value = "count" ,required = false , defaultValue = "0") int count,@RequestParam(value = "sortBy", required = false, defaultValue = "") String sortBy) {
-        if (count == 0 && (Objects.isNull(sortBy) || sortBy.isBlank())) {
-            return courseService.getAllRecords();
-        } else if (count > 0) {
-            return courseService.getLimitedRecords(count);
-        } else {
-            return courseService.getSortedRecords(sortBy);
-        }
-    }*/

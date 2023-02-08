@@ -1,16 +1,13 @@
 package com.learning.models;
 
-import java.time.LocalDate;
-import java.util.Objects;
-
 import com.learning.enums.BatchStatus;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+import java.time.LocalDate;
+
+@Getter
+@Setter
 public class BatchModel {
 
 	private Long id;

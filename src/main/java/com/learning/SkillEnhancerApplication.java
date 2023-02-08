@@ -12,18 +12,10 @@ import org.springframework.data.domain.Page;
 
 
 @SpringBootApplication
-public class SkillEnhancerApplication implements CommandLineRunner {
-
-    @Autowired
-    private StudentRepository studentRepository;
+public class SkillEnhancerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SkillEnhancerApplication.class, args);
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-      //  System.out.println(studentRepository.findEmails());
-        System.out.println(studentRepository.findAllContacts());
-    }
 }
