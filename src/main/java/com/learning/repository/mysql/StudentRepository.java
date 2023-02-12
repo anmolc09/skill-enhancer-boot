@@ -14,9 +14,5 @@ public interface StudentRepository extends JpaRepository<StudentEntity, Long> {
 
     @Query(value = "select s.contactDetails from StudentEntity s")
     List<Long> findAllContacts();
-/*
-@Query(value = "select email from student" ,nativeQuery = true)
-    List<String> findEmails();
-*/
 
 }

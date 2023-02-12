@@ -19,7 +19,7 @@ public class StudentEntity {
 	private Long id;
 	@NotNull
 	private String name;
-	@Pattern(regexp = "^\\d{10}$")
+	//@Pattern(regexp = "^\\d{10}$")
 	private Long contactDetails;
 	@Size(min = 2, max = 30)
 	private String qualification;
