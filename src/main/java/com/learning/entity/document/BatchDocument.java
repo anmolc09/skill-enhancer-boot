@@ -1,4 +1,4 @@
-package com.learning.entity.collections;
+package com.learning.entity.document;
 
 import com.learning.enums.BatchStatus;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Document(collection = "batch")
-public class BatchCollection {
+public class BatchDocument {
 
 	@Id
 	private Long id;

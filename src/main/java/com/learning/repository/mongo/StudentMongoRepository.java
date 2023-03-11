@@ -1,9 +1,9 @@
 package com.learning.repository.mongo;
 
-import com.learning.entity.collections.StudentCollection;
+import com.learning.entity.document.StudentDocument;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 
-public interface StudentMongoRepository extends MongoRepository<StudentCollection, Long> {
+public interface StudentMongoRepository extends MongoRepository<StudentDocument, Long> {
 
 }

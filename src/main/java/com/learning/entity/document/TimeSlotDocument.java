@@ -1,4 +1,4 @@
-package com.learning.entity.collections;
+package com.learning.entity.document;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +11,7 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @Document(collection = "timeslot")
-public class TimeSlotCollection {
+public class TimeSlotDocument {
 	
 	@Id
 	private Long id;

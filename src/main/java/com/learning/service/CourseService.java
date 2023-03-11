@@ -1,7 +1,7 @@
 package com.learning.service;
 
 import com.learning.entity.CourseEntity;
-import com.learning.entity.collections.CourseCollection;
+import com.learning.entity.document.CourseDocument;
 import com.learning.enums.ErrorMessages;
 import com.learning.enums.InfoMessages;
 import com.learning.exceptions.DataNotFoundException;
@@ -50,8 +50,8 @@ public class CourseService {
             jpaRepo.saveAll(courseEntityList);
 
             CompletableFuture.runAsync(() -> {
-                List<CourseCollection> courseCollectionList = courseEntityList.stream()
-                        .map(courseEntity -> modelMapper.map(courseEntity, CourseCollection.class))
+                List<CourseDocument> courseCollectionList = courseEntityList.stream()
+                        .map(courseEntity -> modelMapper.map(courseEntity, CourseDocument.class))
                         .collect(Collectors.toList());
                 log.info(InfoMessages.SAVING_DATA_IN_MONGO.getInfoMessage());
                 mongoRepo.saveAll(courseCollectionList);
@@ -62,7 +62,7 @@ public class CourseService {
 
     public CourseModel getRecordById(Long id) {
         if(mongoRepo.existsById(id)){
-            CourseCollection courseCollection = mongoRepo.findById(id)
+            CourseDocument courseCollection = mongoRepo.findById(id)
                     .orElseThrow(() -> new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()));
             return modelMapper.map(courseCollection,CourseModel.class);
         }
@@ -80,7 +80,7 @@ public class CourseService {
         jpaRepo.save(courseEntity);
 
         CompletableFuture.runAsync(() -> {
-            CourseCollection courseCollection = mongoRepo.findById(id)
+            CourseDocument courseCollection = mongoRepo.findById(id)
                     .orElseThrow(() -> new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()));
             modelMapper.map(record, courseCollection);
             log.info(InfoMessages.UPDATING_DATA_IN_MONGO.getInfoMessage());

@@ -1,7 +1,7 @@
 package com.learning.service;
 
 import com.learning.entity.StudentEntity;
-import com.learning.entity.collections.StudentCollection;
+import com.learning.entity.document.StudentDocument;
 import com.learning.enums.ErrorMessages;
 import com.learning.enums.InfoMessages;
 import com.learning.exceptions.DataNotFoundException;
@@ -57,8 +57,8 @@ public class StudentService {
             jpaRepo.saveAll(studentEntityList);
 
             CompletableFuture.runAsync(() -> {
-                List<StudentCollection> studentCollectionList = studentEntityList.stream()
-                        .map(studentEntity -> modelMapper.map(studentEntity, StudentCollection.class))
+                List<StudentDocument> studentCollectionList = studentEntityList.stream()
+                        .map(studentEntity -> modelMapper.map(studentEntity, StudentDocument.class))
                         .collect(Collectors.toList());
                 log.info(InfoMessages.SAVING_DATA_IN_MONGO.getInfoMessage());
                 mongoRepo.saveAll(studentCollectionList);
@@ -70,7 +70,7 @@ public class StudentService {
 
     public StudentModel getRecordById(Long id) {
             if (mongoRepo.existsById(id)) {
-            StudentCollection studentCollection = mongoRepo.findById(id)
+            StudentDocument studentCollection = mongoRepo.findById(id)
                     .orElseThrow(() -> new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()));
             return modelMapper.map(studentCollection, StudentModel.class);
         }
@@ -89,11 +89,11 @@ public class StudentService {
         jpaRepo.save(studentEntity);
 
         CompletableFuture.runAsync(() -> {
-            StudentCollection studentCollection = mongoRepo.findById(id)
+            StudentDocument studentDocument = mongoRepo.findById(id)
                     .orElseThrow(() -> new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()));
-            modelMapper.map(record, studentCollection);
+            modelMapper.map(record, studentDocument);
             log.info(InfoMessages.UPDATING_DATA_IN_MONGO.getInfoMessage());
-            mongoRepo.save(studentCollection);
+            mongoRepo.save(studentDocument);
         });
         return record;
     }
@@ -119,8 +119,8 @@ public class StudentService {
                 jpaRepo.saveAll(studentEntityList);
 
                 CompletableFuture.runAsync(() -> {
-                    List<StudentCollection> studentCollectionList = studentEntityList.stream()
-                            .map(studentEntity -> modelMapper.map(studentEntity, StudentCollection.class))
+                    List<StudentDocument> studentCollectionList = studentEntityList.stream()
+                            .map(studentEntity -> modelMapper.map(studentEntity, StudentDocument.class))
                             .collect(Collectors.toList());
                     log.info(InfoMessages.SAVING_DATA_IN_MONGO.getInfoMessage());
                     mongoRepo.saveAll(studentCollectionList);
@@ -138,14 +138,6 @@ public class StudentService {
     public void sendMailWithAttachment() {
         emailSender.sendMailWithAttachment(jpaRepo.findEmails());
     }
-
-    public void transferMySqlDataToMongo() {
-        List<StudentCollection> studentCollection = jpaRepo.findAll().stream()
-                .map(studentEntity -> modelMapper.map(studentEntity, StudentCollection.class))
-                .collect(Collectors.toList());
-        mongoRepo.saveAll(studentCollection);
-    }
-
 
 }
 

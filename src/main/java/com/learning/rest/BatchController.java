@@ -24,7 +24,6 @@ public class BatchController {
 			@RequestParam(value = "page", required = false, defaultValue = "0") int page,
 			@RequestParam(value = "limit", required = false, defaultValue = "0") int limit,
 			@RequestParam(value = "sortBy", required = false, defaultValue = "") String sortBy) {
-
 		return batchService.getAllRecordByPaginationAndSorting(page, limit, sortBy);
 	}
 

@@ -1,7 +1,7 @@
 package com.learning.service;
 
 import com.learning.entity.BatchEntity;
-import com.learning.entity.collections.BatchCollection;
+import com.learning.entity.document.BatchDocument;
 import com.learning.enums.ErrorMessages;
 import com.learning.enums.InfoMessages;
 import com.learning.exceptions.DataNotFoundException;
@@ -50,8 +50,8 @@ public class BatchService {
             jpaRepo.saveAll(batchEntityList);
 
             CompletableFuture.runAsync(() -> {
-                List<BatchCollection> batchCollectionList = batchEntityList
-                        .stream().map(batchEntity -> modelMapper.map(batchEntity, BatchCollection.class))
+                List<BatchDocument> batchCollectionList = batchEntityList
+                        .stream().map(batchEntity -> modelMapper.map(batchEntity, BatchDocument.class))
                         .collect(Collectors.toList());
                 log.info(InfoMessages.SAVING_DATA_IN_MONGO.getInfoMessage());
                 mongoRepo.saveAll(batchCollectionList);
@@ -62,7 +62,7 @@ public class BatchService {
 
     public BatchModel getRecordById(Long id) {
         if (mongoRepo.existsById(id)) {
-            BatchCollection batchCollection = mongoRepo.findById(id)
+            BatchDocument batchCollection = mongoRepo.findById(id)
                     .orElseThrow(() -> new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()));
             return modelMapper.map(batchCollection, BatchModel.class);
         }
@@ -79,7 +79,7 @@ public class BatchService {
         jpaRepo.save(batchEntity);
 
         CompletableFuture.runAsync(() -> {
-            BatchCollection batchCollection = mongoRepo.findById(id)
+            BatchDocument batchCollection = mongoRepo.findById(id)
                     .orElseThrow(() -> new DataNotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage()));
             modelMapper.map(record, batchCollection);
             log.info(InfoMessages.UPDATING_DATA_IN_MONGO.getInfoMessage());

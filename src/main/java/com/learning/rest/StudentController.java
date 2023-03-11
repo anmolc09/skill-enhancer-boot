@@ -60,9 +60,4 @@ public class StudentController {
         studentService.sendMailWithAttachment();
     }
 
-    @PostMapping("/transfer")
-    public void transferMySqlDataToMongo() {
-       studentService.transferMySqlDataToMongo();
-    }
-
 }

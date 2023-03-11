@@ -1,5 +1,4 @@
-package com.learning.entity.collections;
-
+package com.learning.entity.document;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,12 +8,14 @@ import javax.persistence.Id;
 
 @Getter
 @Setter
-@Document(collection = "trainer")
-public class TrainerCollection {
+@Document(collection = "student")
+public class StudentDocument {
 
 	@Id
 	private Long id;
 	private String name;
-	private String specialisation;
+	private Long contactDetails;
+	private String qualification;
+	private String email;
 
 }

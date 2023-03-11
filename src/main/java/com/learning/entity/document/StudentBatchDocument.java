@@ -1,4 +1,4 @@
-package com.learning.entity.collections;
+package com.learning.entity.document;
 
 
 import lombok.Getter;
@@ -10,7 +10,7 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @Document(collection = "student_batch")
-public class StudentBatchCollection {
+public class StudentBatchDocument {
 
 	@Id
 	private Long id;

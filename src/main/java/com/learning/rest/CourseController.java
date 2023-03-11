@@ -19,7 +19,15 @@ public class CourseController {
         return courseService.getRecordById(id);
     }
 
-    @PostMapping
+    @GetMapping("/get-records")
+    public List<CourseModel> getAllRecords(
+            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(value = "limit", required = false, defaultValue = "10") int limit,
+            @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy) {
+        return courseService.getAllRecordByPaginationAndSorting(page, limit, sortBy);
+    }
+
+        @PostMapping
     public List<CourseModel> saveRecords(@RequestBody List<CourseModel> courseModelList) {
         return courseService.saveRecords(courseModelList);
     }
